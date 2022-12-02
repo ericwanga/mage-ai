@@ -1,0 +1,129 @@
+blocks:
+- all_upstream_blocks_executed: true
+  configuration: {}
+  downstream_blocks:
+  - light_transformation
+  - light_transformation
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: load_data
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_data
+- all_upstream_blocks_executed: true
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: red wind
+  status: updated
+  type: scratchpad
+  upstream_blocks: []
+  uuid: red_wind
+- all_upstream_blocks_executed: true
+  configuration: {}
+  downstream_blocks:
+  - restless_shadow
+  - export_to_snowflake_staging
+  - bar_chart_for_cold_wave_1670013481549
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: light_transformation
+  status: updated
+  type: transformer
+  upstream_blocks:
+  - load_data
+  uuid: light_transformation
+- all_upstream_blocks_executed: true
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: young butterfly
+  status: updated
+  type: scratchpad
+  upstream_blocks: []
+  uuid: young_butterfly
+- all_upstream_blocks_executed: true
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: wandering fog
+  status: updated
+  type: scratchpad
+  upstream_blocks: []
+  uuid: wandering_fog
+- all_upstream_blocks_executed: false
+  configuration:
+    data_provider: snowflake
+    data_provider_database: DEFAULT_DB
+    data_provider_profile: default
+    data_provider_schema: STAGING
+    export_write_policy: append
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: sql
+  name: restless shadow
+  status: failed
+  type: data_exporter
+  upstream_blocks:
+  - light_transformation
+  uuid: restless_shadow
+- all_upstream_blocks_executed: false
+  configuration: {}
+  downstream_blocks:
+  - cold_wave
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: export_to_snowflake_staging
+  status: executed
+  type: data_exporter
+  upstream_blocks:
+  - light_transformation
+  uuid: export_to_snowflake_staging
+- all_upstream_blocks_executed: false
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: yaml
+  name: cold wave
+  status: failed
+  type: dbt
+  upstream_blocks:
+  - export_to_snowflake_staging
+  uuid: cold_wave
+name: example_pipeline
+type: python
+uuid: example_pipeline
+widgets:
+- all_upstream_blocks_executed: false
+  configuration:
+    chart_style: horizontal
+    chart_type: bar chart
+    group_by:
+    - CountryCode
+    metrics:
+    - aggregation: sum
+      column: Population
+    x: x
+    y: y
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: yaml
+  name: bar chart for cold_wave 1670013481549
+  status: executed
+  type: chart
+  upstream_blocks:
+  - light_transformation
+  uuid: bar_chart_for_cold_wave_1670013481549
