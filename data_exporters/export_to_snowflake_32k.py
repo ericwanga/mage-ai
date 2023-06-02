@@ -16,10 +16,10 @@ def export_data_to_snowflake(df: DataFrame, **kwargs) -> None:
 
     Docs: https://github.com/mage-ai/mage-ai/blob/master/docs/blocks/data_loading.md#snowflake
     """
-    table_name = 'mage_table'
+    table_name = 'incident'
     database = 'DEFAULT_DB'
     schema = 'STAGING'
-    config_path = path.join(get_repo_path(), 'io_config.yaml')
+    config_path = path.join(get_repo_path(), 'io_config_sf_DEFAULT_STAGING.yaml')
     config_profile = 'default'
 
     with Snowflake.with_config(ConfigFileLoader(config_path, config_profile)) as loader:
@@ -30,4 +30,3 @@ def export_data_to_snowflake(df: DataFrame, **kwargs) -> None:
             schema,
             if_exists='replace',  # Specify resolution policy if table already exists
         )
-

@@ -14,6 +14,29 @@ blocks:
   uuid: load_data
 - all_upstream_blocks_executed: true
   configuration: {}
+  downstream_blocks:
+  - export_to_snowflake_32k
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: load_data_local
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_data_local
+- all_upstream_blocks_executed: true
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: load_data_from_snowflake
+  status: failed
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_data_from_snowflake
+- all_upstream_blocks_executed: true
+  configuration: {}
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
@@ -27,20 +50,21 @@ blocks:
   configuration: {}
   downstream_blocks:
   - restless_shadow
-  - export_to_snowflake_staging
+  - export_to_snowflake_staging_4k
   - bar_chart_for_cold_wave_1670013481549
   executor_config: null
   executor_type: local_python
   language: python
   name: light_transformation
-  status: updated
+  status: executed
   type: transformer
   upstream_blocks:
   - load_data
   uuid: light_transformation
 - all_upstream_blocks_executed: true
   configuration: {}
-  downstream_blocks: []
+  downstream_blocks:
+  - lingering_sun
   executor_config: null
   executor_type: local_python
   language: python
@@ -55,12 +79,13 @@ blocks:
   executor_config: null
   executor_type: local_python
   language: python
-  name: wandering fog
-  status: updated
-  type: scratchpad
-  upstream_blocks: []
-  uuid: wandering_fog
-- all_upstream_blocks_executed: false
+  name: export_to_snowflake_32k
+  status: executed
+  type: data_exporter
+  upstream_blocks:
+  - load_data_local
+  uuid: export_to_snowflake_32k
+- all_upstream_blocks_executed: true
   configuration:
     data_provider: snowflake
     data_provider_database: DEFAULT_DB
@@ -77,20 +102,20 @@ blocks:
   upstream_blocks:
   - light_transformation
   uuid: restless_shadow
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   configuration: {}
   downstream_blocks:
   - cold_wave
   executor_config: null
   executor_type: local_python
   language: python
-  name: export_to_snowflake_staging
+  name: export_to_snowflake_staging_4k
   status: executed
   type: data_exporter
   upstream_blocks:
   - light_transformation
-  uuid: export_to_snowflake_staging
-- all_upstream_blocks_executed: false
+  uuid: export_to_snowflake_staging_4k
+- all_upstream_blocks_executed: true
   configuration: {}
   downstream_blocks: []
   executor_config: null
@@ -100,13 +125,25 @@ blocks:
   status: failed
   type: dbt
   upstream_blocks:
-  - export_to_snowflake_staging
+  - export_to_snowflake_staging_4k
   uuid: cold_wave
+- all_upstream_blocks_executed: false
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  language: python
+  name: lingering sun
+  status: not_executed
+  type: scratchpad
+  upstream_blocks:
+  - young_butterfly
+  uuid: lingering_sun
 name: example_pipeline
 type: python
 uuid: example_pipeline
 widgets:
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   configuration:
     chart_style: horizontal
     chart_type: bar chart
